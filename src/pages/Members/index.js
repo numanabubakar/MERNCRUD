@@ -52,9 +52,8 @@ const Index = () => {
     }) 
   }
   const handleUpdateModel = (doc) => {
-    setUpdateModalShow(true);
-    console.log(doc);
     setGetData(doc)
+    setUpdateModalShow(true);
 
   }
 
@@ -62,7 +61,7 @@ const Index = () => {
 
     return (
       <>
-      <div className="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div className="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div className="modal-dialog">
     <div className="modal-content">
       <div className="modal-header ">
@@ -160,11 +159,11 @@ const Index = () => {
           })}
 
         </tbody>
+      </table>
         <UpdateModel
           show={updateModalShow}
           onHide={() => setUpdateModalShow(false)}
         />
-      </table>
 
       {isLoading ? '' : (<Circles
         height="100"
