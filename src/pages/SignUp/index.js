@@ -34,7 +34,7 @@ const handleSubmit = (e) =>{
   return (
 <div className="text-center m-5-auto py-3">
             <h2 className='fw-bold '>Join Us</h2>
-            <h5>Create your personal account</h5>
+            <h5 className='fw-light'>Create your personal account</h5>
             <form onSubmit={handleSubmit}>
                 <p>
                     <label>Full Name</label><br/>

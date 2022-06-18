@@ -4,7 +4,6 @@ import NavBar from '../components/Header';
 import Footer from '../components/Footer';
 import Home from './Home';
 import Members from './Members';
-import Login from './Login';
 import SignUp from './SignUp';
 
 const Index = () => {
@@ -17,7 +16,6 @@ const Index = () => {
 <Routes> 
 <Route path='/' element={ <Home />}   />
 <Route path='/members' element={ <Members />}   />
-<Route path='/Login' element={ <Login />}   />
 <Route path='/signup' element={ <SignUp />}   />
 
     
