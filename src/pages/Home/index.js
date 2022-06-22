@@ -6,7 +6,7 @@ const Home = () => {
 <div className="container py-5 textColor mt-5">
     <div className="row mt-5">
         <div className="col mt-5">
-    <h1 className='text-center fw-bolder'>WELLCOME TO OUR COMPANY</h1>
+    <h1 className='text-center fw-bolder'>WELLCOME TO OUR CRUD OPERATION</h1>
 
         </div>
     </div>

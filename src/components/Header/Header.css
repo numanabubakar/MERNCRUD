@@ -1,8 +1,12 @@
 
 .bgColor{
-    background-color: #016170 !important;
+    background-color: #9AB8BA !important;
 }
 .textColor{
     
-    color: #00E0c6 !important;
+    color: #045256 !important;
+}
+.contactBtn{
+    background-color: #045256 !important;
+    color: #9AB8BA !important;
 }

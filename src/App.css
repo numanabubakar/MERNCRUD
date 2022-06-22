@@ -1,9 +1,11 @@
 @import url(../node_modules/bootstrap/dist/css/bootstrap.min.css);
 @import url(https://fonts.googleapis.com/css?family=Poppins:100,100italic,200,200italic,300,300italic,regular,italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic);
+@import 'react-toastify/dist/ReactToastify.css';
 
 body{
     
     font-family: 'Poppins' !important;
+    color: #045256;
 }
 
 *{
@@ -20,10 +22,8 @@ body{
 main{
  
   flex: 1 0 auto;
-background: #D3CCE3;  /* fallback for old browsers */
-background: -webkit-linear-gradient(to right, #E9E4F0, #D3CCE3);  /* Chrome 10-25, Safari 5.1-6 */
-background: linear-gradient(to right, #E9E4F0, #D3CCE3); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-;
+background: #9AB8BA;  /* fallback for old browsers */
+
 
 }
 #checkbox {
@@ -39,6 +39,9 @@ form span {
 }
 h2 {
   font-weight: 300
+}
+.bgColor{
+  background-color: #258BD6 !important;
 }
 
 form {
@@ -91,4 +94,12 @@ footer p {
 }
 svg{
   margin: 0 auto;
+
+}
+.mYclass{
+  margin-top: 164px;
+}
+
+.scrollme {
+  overflow-x: auto;
 }
