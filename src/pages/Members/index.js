@@ -1,26 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import { Circles } from 'react-loader-spinner'
+import Swal from 'sweetalert2';
 import axios from "axios"
 import { FaRegEdit } from 'react-icons/fa';
+import { Link } from "react-router-dom";
 import { TiUserDeleteOutline } from 'react-icons/ti';
 const Index = () => {
   const [documents, setDocuments] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [updateModalShow, setUpdateModalShow] = useState(false);
-  
-  const [getData, setGetData] = useState({})
-  const [newData, setNewData] = useState({
-    fullName: "",
-    email: "",
-    age: "",
-    phoneNo: ""
-  });
 
-
-  const handleChange = (e) => {
-    console.log(newData)
-    setNewData((s) => ({ ...s, [e.target.name]: e.target.value }));
-  }
 
 
   const URL = "http://localhost:8000"
@@ -30,149 +18,113 @@ const Index = () => {
     axios.get(`${URL}/getUsers`)
       .then((res) => {
         setDocuments(res.data)
-        // console.log(res.data);
         setIsLoading(true)
       })
       .catch((err) => {
-        console.error(err)
+        Swal.fire(err, {
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Something went wrong!',
+          footer: '<Link>Why do I have this issue?</Link>'
+        })
       })
   }, [])
 
-  const handleUpdate = (doc) => {
-    console.log(doc);
-    const updateUser = {id: doc._id ,fullname: newData.fullName , email : newData.email, age: newData.age , phoneNo: newData.phoneNo  }
-    console.log(newData);
-        axios.put(`${URL}/updateUser`, updateUser)
+
+  const showDeleteModal = (doc) => {
+    const { _id } = doc
+    Swal.fire({
+      title: `Are you sure? ${doc.fullName} `,
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+
+      if (result.isConfirmed) {
+
+        axios.delete(`${URL}/deleteUser/${_id}`)
           .then((res) => {
-            console.log("message from server", res.data)
 
+            Swal.fire({
+              title: "Deleted!",
+              text: ` ${doc.fullName} Your Account Successfully Deleted !`,
+              icon: "success",
+              timer: 3000,
+            });
+            let newArray = documents.filter((doc) => {
+              return _id !== doc._id;
+            });
+            setDocuments(newArray);
+          }).catch((err) => {
+            Swal.fire(err, {
+              icon: 'error',
+              title: 'Oops...',
+              text: 'Something went wrong!',
+              footer: '<Link>Why do I have this issue?</Link>'
+            })
           })
-          .catch((err) => {
-            console.error(err)
-    }) 
-  }
-  const handleUpdateModel = (doc) => {
-    setGetData(doc)
-    setUpdateModalShow(true);
 
-  }
-
-  const UpdateModel = () => {
-
-    return (
-      <>
-      <div className="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div className="modal-dialog">
-    <div className="modal-content">
-      <div className="modal-header ">
-        <h5 className="modal-title " id="staticBackdropLabel">UPDATE YOUR DATA HERE</h5>
-        <button type="button" className="btn-close " data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div className="modal-body mx-auto">
-      <form >
-                <p>
-                    <label>Full Name</label><br/>
-                    <input type="text" name="fullName" value={getData.fullName} onChange={handleChange} required />
-                </p>
-                <p>
-                    <label>Email address</label><br/>
-                    <input type="email" name="email" value={getData.email} onChange={handleChange} required />
-                </p>
-                <p>
-                    <label>Age</label><br/>
-                    <input type="number" name="age" value={getData.age} onChange={handleChange} required />
-                </p>
-                <p>
-                    <label>PhoneNo</label><br/>
-                    <input type="number" name="phoneNo" value={getData.phoneNo} onChange={handleChange} required />
-                </p>
-              
-                
-            </form>
-      </div>
-      <div className="modal-footer">
-        <button type="button" className="btn btn-danger w-100 " data-bs-dismiss="modal" onClick={() => setUpdateModalShow(false)}>Close</button>
-        <button type="button" className="btn " id="sub_btn" onClick={(doc)=> handleUpdate(doc)}>Update</button>
-      </div>
-    </div>
-  </div>
-</div>
-</>
-    );
+      }
+    })
   };
-
-
-  const handleDelete = (doc) => {
-    const { _id } = doc;
-
-    console.log(doc);
-    axios.delete(`${URL}/deleteUser/${_id}`)
-      .then((res) => {
-        console.log(res.data)
-      }).catch((err) => {
-        console.error(err)
-      })
-      let newArray = documents.filter((doc) => {
-        return _id !== doc.id;
-      })
-      setDocuments(newArray)
-  }
-
-
 
 
   return (
 
 
-    <div className='container'>
+    <div className='container mt-3 '>
 
-      <h1 className='text-center py-3 fw-bold'>OUR MEMBER LIST</h1>
-      <table className="table table-hover text-center table-info table-striped">
-        <thead>
-          <tr>
-            <th scope="col">Sr.No</th>
-            <th scope="col">Name</th>
-            <th scope="col">Email</th>
-            <th scope="col">Age</th>
-            <th scope="col">Contact No</th>
-            <th scope="col">Action</th>
-          </tr>
-        </thead>
-
-
-        <tbody>
-          {documents.map((doc, i) => {
-            return <tr key={i}>
-
-              <th scope='row' > {i} </th>
-              <td> {doc.fullName}</td>
-              <td> {doc.email}</td>
-              <td> {doc.age}</td>
-              <td> {doc.phoneNo}</td>
-              <td > <button className='btn text-danger mx-2' onClick={() => { handleDelete(doc) }}>
-                <h4><TiUserDeleteOutline /></h4>
-              </button>
-                <button type="button" className='btn text-primary ' data-bs-toggle="modal" data-bs-target="#staticBackdrop" variant="primary" onClick={() => handleUpdateModel(doc)} > <h5><FaRegEdit /> </h5> </button>
-              </td>
-
+      <h1 className='text-center pt-3 fw-bold ' >OUR MEMBER LIST</h1>
+      <hr className='mx-auto w-25 fw-bold '/>
+      <div className='scrollme'>
+        <table className="table table-hover table-responsive text-center table-info table-striped responsive">
+          <thead>
+            <tr>
+              <th scope="col">Sr.No</th>
+              <th scope="col">Name</th>
+              <th scope="col">Email</th>
+              <th scope="col">Age</th>
+              <th scope="col">Contact No</th>
+              <th scope="col">Action</th>
             </tr>
-          })}
+          </thead>
 
-        </tbody>
-      </table>
-        <UpdateModel
-          show={updateModalShow}
-          onHide={() => setUpdateModalShow(false)}
+
+          <tbody>
+            {documents.map((doc, i) => {
+              return <tr key={i}>
+
+                <th scope='row' > {i + 1} </th>
+                <td> {doc.fullName}</td>
+                <td> {doc.email}</td>
+                <td> {doc.age}</td>
+                <td> {doc.phoneNo}</td>
+                <td > <button className='btn text-danger mx-2' onClick={() => { showDeleteModal(doc) }}>
+                  <h4><TiUserDeleteOutline /></h4>
+                </button>
+                  <Link to={`/edit/${doc._id}`}> <button type="button" className='btn text-primary ' > <h5><FaRegEdit /> </h5>    </button> </Link>
+                </td>
+
+              </tr>
+            })}
+
+          </tbody>
+        </table>
+      </div>
+
+
+      {isLoading ? '' : (<div className='mYclass'>
+        <Circles
+          height="100"
+          width="100"
+          color='#016170'
+          ariaLabel='loading'
+          text-align="center"
         />
-
-      {isLoading ? '' : (<Circles
-        height="100"
-        width="100"
-        className='text-center mt-5'
-        color='#016170'
-        ariaLabel='loading'
-        text-align="center"
-      />)}
+      </div>)}
 
 
 

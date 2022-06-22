@@ -4,8 +4,9 @@ import NavBar from '../components/Header';
 import Footer from '../components/Footer';
 import Home from './Home';
 import Members from './Members';
+import Edit from './Members/Edit.js';
 import SignUp from './SignUp';
-
+import { ToastContainer } from "react-toastify";
 const Index = () => {
   return (
     <>
@@ -17,6 +18,7 @@ const Index = () => {
 <Route path='/' element={ <Home />}   />
 <Route path='/members' element={ <Members />}   />
 <Route path='/signup' element={ <SignUp />}   />
+<Route path={'/edit/:id'} element={ <Edit />}   />
 
     
 </Routes>
@@ -29,6 +31,7 @@ const Index = () => {
 
 <Footer />
 </BrowserRouter>
+<ToastContainer />
     </>
   )
 }
