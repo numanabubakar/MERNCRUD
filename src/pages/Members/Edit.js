@@ -6,35 +6,51 @@ import {
 Form,
 Button
 } from 'react-bootstrap'
+import validator from 'validator' 
+
 
 
 const Edit = () => {
-  const [state, setState] = useState({})
-  const [newData, setNewData] = useState({
-    fullName: "",
+  const [state, setState] = useState({
+    fullName: "" ,
     email: "",
     age: '',
     phoneNo: '',
   })
+
   const Navigate = useNavigate()
-  useEffect(() => {
-    getdata();
-  }, []);
-  const URL = "http://localhost:8000"
+  const URL = "https://merncrudbynuman.herokuapp.com"
   const { id } = useParams()
   const { fullName, email, age, phoneNo } = state;
-
+  
   const getdata = async () => {
-
+    
     axios.get(`${URL}/getUser/${id}`).then((res) => {
       setState(res.data)
     })
   }
+  useEffect(() => {
+    getdata();
+  }, []);
 
 
   const handleUpdateData =  (doc) => {
-    let updateUser = { id: id, fullName: newData.fullName, email: newData.email, age: newData.age, phoneNo: newData.phoneNo }
-     axios.put(`${URL}/updateUser`, updateUser)
+
+
+    const isValidPhoneNumber = validator.isMobilePhone(state.phoneNo)
+    if(!isValidPhoneNumber){
+      Swal.fire({
+              icon: 'error',
+              title: 'Phone Number Invalid',
+              text: 'Your Phone Number Must be Upto 5 digits',
+              timer: 3000,
+            })
+    }
+    else{
+
+      
+      let updateUser = { id: id, fullName: fullName, email: email, age: age, phoneNo: phoneNo }
+      axios.put(`${URL}/updateUser`, updateUser)
       .then((res) => {
         Swal.fire({
           title: "Updated!",
@@ -52,17 +68,15 @@ const Edit = () => {
           footer: '<Link>Why do I have this issue?</Link>'
         })
       })
+    }
   }
 
   const handleChange = (e) => {
-    setNewData(newData => ({ ...newData, [e.target.name]: e.target.value }))
+    setState(state => ({ ...state, [e.target.name]: e.target.value }))
   }
   return (
 <>
-
-
-
-  <h3 className='fw-bold text-center mt-2 '> Update Your Info Here </h3>
+<h3 className='fw-bold text-center mt-2 '> Update Your Info Here </h3>
   <hr className='w-25 mx-auto '/>
 
     
