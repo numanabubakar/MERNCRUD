@@ -5,13 +5,15 @@ import axios from "axios"
 import { FaRegEdit } from 'react-icons/fa';
 import { Link } from "react-router-dom";
 import { TiUserDeleteOutline } from 'react-icons/ti';
+
+
 const Index = () => {
   const [documents, setDocuments] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
 
 
-  const URL = "http://localhost:8000"
+  const URL = "https://merncrudbynuman.herokuapp.com"
 
 
   useEffect(() => {
@@ -38,9 +40,13 @@ const Index = () => {
       text: "You won't be able to revert this!",
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!'
+      confirmButtonColor: '#d33',
+      confirmButtonText:
+        '<i class="fas fa-trash-alt  px-3 fs-4"></i> ',
+      cancelButtonText:
+        '<i class="fas fa-times-circle px-3 fs-4"></i>',
+      cancelButtonColor: '#3085d6'
+
     }).then((result) => {
 
       if (result.isConfirmed) {
@@ -78,7 +84,7 @@ const Index = () => {
     <div className='container mt-3 '>
 
       <h1 className='text-center pt-3 fw-bold ' >OUR MEMBER LIST</h1>
-      <hr className='mx-auto w-25 fw-bold '/>
+      <hr className='mx-auto w-25 fw-bold ' />
       <div className='scrollme'>
         <table className="table table-hover table-responsive text-center table-info table-striped responsive">
           <thead>
@@ -87,7 +93,7 @@ const Index = () => {
               <th scope="col">Name</th>
               <th scope="col">Email</th>
               <th scope="col">Age</th>
-              <th scope="col">Contact No</th>
+              <th scope="col">Contact</th>
               <th scope="col">Action</th>
             </tr>
           </thead>
@@ -102,10 +108,10 @@ const Index = () => {
                 <td> {doc.email}</td>
                 <td> {doc.age}</td>
                 <td> {doc.phoneNo}</td>
-                <td > <button className='btn text-danger mx-2' onClick={() => { showDeleteModal(doc) }}>
+                <td > <button className='btn text-danger mx-2 text-decoration-none' onClick={() => { showDeleteModal(doc) }}>
                   <h4><TiUserDeleteOutline /></h4>
                 </button>
-                  <Link to={`/edit/${doc._id}`}> <button type="button" className='btn text-primary ' > <h5><FaRegEdit /> </h5>    </button> </Link>
+                  <Link to={`/edit/${doc._id}`}> <button type="button" className='btn text-primary text-decoration-none '> <h5><FaRegEdit /></h5> </button> </Link>
                 </td>
 
               </tr>
