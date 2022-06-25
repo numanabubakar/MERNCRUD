@@ -13,7 +13,7 @@ const Index = () => {
 
 
 
-  const URL = "https://merncrudbynuman.herokuapp.com"
+  const URL = "https://merncrudbynuman.herokuapp.com";
 
 
   useEffect(() => {
@@ -23,11 +23,10 @@ const Index = () => {
         setIsLoading(true)
       })
       .catch((err) => {
-        Swal.fire(err, {
-          icon: 'error',
+        Swal.fire({
           title: 'Oops...',
           text: 'Something went wrong!',
-          footer: '<Link>Why do I have this issue?</Link>'
+          icon: 'error',
         })
       })
   }, [])
@@ -65,11 +64,10 @@ const Index = () => {
             });
             setDocuments(newArray);
           }).catch((err) => {
-            Swal.fire(err, {
+            Swal.fire({
               icon: 'error',
               title: 'Oops...',
               text: 'Something went wrong!',
-              footer: '<Link>Why do I have this issue?</Link>'
             })
           })
 

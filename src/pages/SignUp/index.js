@@ -45,7 +45,7 @@ else {
             title : "Created!", 
              text : ` ${state.fullName} Your Account Succesfully Created!`,
              icon : "success",
-             timer : 3000,
+             timer : 3000, 
             });
       })
       .catch((err) => {

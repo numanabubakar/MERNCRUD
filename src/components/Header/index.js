@@ -28,7 +28,7 @@ const NavBar = () => {
         </li>
       </ul>
       <div className=" navbar-nav">  
-          <button className='btn contactBtn '><Link to='/' className='contactBtn text-decoration-none'> Contact US </Link> </button>       
+          <button className='btn contactBtn '><span  className='contactBtn text-decoration-none' onClick={() => window.location = 'mailto:numanabubakar99@gmail.com'}> Contact US </span> </button>       
       </div>
     </div>
   </div>

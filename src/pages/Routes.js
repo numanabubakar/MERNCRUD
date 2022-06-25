@@ -6,6 +6,7 @@ import Home from './Home';
 import Members from './Members';
 import Edit from './Members/Edit.js';
 import SignUp from './SignUp';
+import NoPage from './NoPage'
 import { ToastContainer } from "react-toastify";
 const Index = () => {
   return (
@@ -19,6 +20,7 @@ const Index = () => {
 <Route path='/members' element={ <Members />}   />
 <Route path='/signup' element={ <SignUp />}   />
 <Route path={'/edit/:id'} element={ <Edit />}   />
+<Route path='*' element={ <NoPage />}   />
 
     
 </Routes>
